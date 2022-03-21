@@ -1,12 +1,12 @@
 const {Router} = require('express')
 const bcrypt = require('bcryptjs')
+const config = require('config');
 const jwt = require('jsonwebtoken')
 const {check, validationResult} = require('express-validator')
 const User = require('../models/User')
+const router = Router()
 //const {timings} = require("concurrently/dist/src/defaults");
 //const {asyncConfig} = require("config/async");
-const config = require("../config/default.json");
-const router = Router()
 //api/auth + register
 router.post('/register',
     [
@@ -38,7 +38,7 @@ router.post('/register',
 //api/auth + login
 router.post('/login',
     [
-        check('email', 'Enter a valid email').normalizeEmail().isEmail()
+        check('email', 'Enter a valid email').normalizeEmail().isEmail(),
         check('password', 'Enter password').exists()
     ],
     async (req, res) => {
