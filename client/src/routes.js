@@ -1,17 +1,18 @@
 import React from "react";
-import {Navigate} from "react-router";
-import {Route, Routes} from "react-router"
+
 import {LinksPage} from "./pages/LinksPage";
 import {CreatePage} from "./pages/CreatePage";
 import {DetailPage} from "./pages/DetailPage";
 import {AuthPage} from "./pages/AuthPage";
+import {Redirect, Route, Switch} from "react-router-dom";
+
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
         return (
-            <Routes>
-                <Route path={'/links'} exact>
-                    <LinksPage/>
+            <Switch>
+                <Route exact path={'/links'} >
+                    <LinksPage/>`
                 </Route>
                 <Route path={'/create'} exact>
                     <CreatePage/>
@@ -19,17 +20,17 @@ export const useRoutes = isAuthenticated => {
                 <Route path={'/detail/:id'}>
                     <DetailPage/>
                 </Route>
-                <Navigate to="/create"/>
-            </Routes>
+                <Redirect to="/create" />
+            </Switch>
         )
     }
     return (
-        <Routes>
-            <Route path={'/'} exact>
+        <Switch>
+            <Route exact path="/" >
 
                 <AuthPage/>
             </Route>
-            <Navigate to={'/'}/>
-        </Routes>
+            <Redirect to={'/'}/>
+        </Switch>
     )
 }
